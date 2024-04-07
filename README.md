@@ -1,6 +1,8 @@
 # Image Dehazing
 
-This repo contains a python implementation of image dehazing as described in **Non-Local Image Dehazing**, by Berman et al. CVPR 2016 [1].
+This repo contains a python implementation of image dehazing as described in
+- **Non-Local Image Dehazing**, Berman et al. CVPR 2016 [1].
+- **Air-light Estimation Using Haze-Lines**, Berman et al. ICCP 2017 [3].
 
 # Table of Contents
 
