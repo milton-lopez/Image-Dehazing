@@ -38,12 +38,12 @@ where $\beta$ is the attenuation coefficient of the atmosphere and $d(x)$ is the
 
 # Non-Local Image Dehazing
 
+The model is based on the concept of haze-lines in RGB space, which are formed by haze affecting different pixels at different distances from the camera.   
+The idea is that colors in a haze-free image can be approximated by a few distinct clusters in RGB space which when distorted by haze, form these haze-lines. The algorithm estimates the transmission map and air-light for each pixel using the haze-lines to recover the clear image.
+
 ![alt text](/images/eq1.png)
 
 ![alt text](/images/eq2.png)
-
-The model is based on the concept of haze-lines in RGB space, which are formed by haze affecting different pixels at different distances from the camera.   
-The idea is that colors in a haze-free image can be approximated by a few distinct clusters in RGB space which when distorted by haze, form these haze-lines. The algorithm estimates the transmission map and air-light for each pixel using the haze-lines to recover the clear image.
 
 Each haze-line in RGB space is defined by its relationship to the air-light value $A$ (these lines originate from the Air-light point and extend through the color space). 
 Estimating the Air-light is crucial because it determines the base point from which haze-lines are drawn. Better Air-light estimation means more accurate reconstruction of the transmission map and a more true-to-life dehazed image.
@@ -52,11 +52,11 @@ Air-light is estimated applying the method described in [3] which I outline belo
 
 # Air-light Estimation
 
+The algorithm clusters pixel's colors in the hazy image and then uses a Hough Transform in 2D color space to vote for the best air-light candidate based on how well the haze-lines (groups of pixels spread out along RGB color space lines) converge at candidate points. The point of convergence is the estimated air-light.
+
 ![alt text](/images/eq3.png)
 
 ![alt text](/images/image-2.png)
-
-The algorithm clusters pixel's colors in the hazy image and then uses a Hough Transform in 2D color space to vote for the best air-light candidate based on how well the haze-lines (groups of pixels spread out along RGB color space lines) converge at candidate points. The point of convergence is the estimated air-light.
 
 The estimated air-light serves as input to the dehazing algorithm image formation model. It separates the light scattered by atmospheric particles from the actual light reflected by objects, and corrects the color and intensity of each pixel based on its estimated distance from the camera and the amount of scattered light.
 
