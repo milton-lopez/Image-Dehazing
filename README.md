@@ -31,30 +31,9 @@ where $\beta$ is the attenuation coefficient of the atmosphere and $d(x)$ is the
 
 # Non-Local Image Dehazing
 
-- **Input:** $\boldsymbol{I}(\boldsymbol{x}), \boldsymbol{A}$  
-- **Output:** $\hat{\boldsymbol{J}}(\boldsymbol{x}), \hat{t}(\boldsymbol{x})$
+![alt text](/images/eq1.png)
 
-1. $\boldsymbol{I}_{\mathrm{A}}(\boldsymbol{x}) = \boldsymbol{I}(\boldsymbol{x}) - \boldsymbol{A}$
-2. Convert $\boldsymbol{I}_{\mathrm{A}}$ to spherical coordinates to obtain $[r(\boldsymbol{x}), \phi(\boldsymbol{x}), \theta(\boldsymbol{x})]$
-3. Cluster the pixels according to $[\phi(\boldsymbol{x}), \theta(\boldsymbol{x})]$. Each cluster $H$ is a haze-line.
-4. For each cluster $H$:
-   - Estimate maximum radius: $\hat{r}_{\text{max}}(\boldsymbol{x}) = \max_{\boldsymbol{x} \in H}\{r(\boldsymbol{x})\}$
-5. For each pixel $x$:
-   - Estimate transmission: $\tilde{t}(\boldsymbol{x}) = \frac{r(\boldsymbol{x})}{\hat{r}_{\text{max}}}$
-6. Perform regularization by calculating $\hat{t}(\boldsymbol{x})$ that minimizes the following equation:
-   - $\sum_{\boldsymbol{x}} \frac{\left[\hat{t}(\boldsymbol{x}) - \tilde{t}_{LB}(\boldsymbol{x})\right]^2}{\sigma^2(\boldsymbol{x})} + \lambda \sum_{\boldsymbol{x}} \sum_{\boldsymbol{y} \in N_{\boldsymbol{x}}} \frac{[\hat{t}(\boldsymbol{x}) - \hat{t}(\boldsymbol{y})]^2}{\|\boldsymbol{I}(\boldsymbol{x}) - \boldsymbol{I}(\boldsymbol{y})\|^2}$
-7. Calculate the dehazed image using the dehazing equation.
-
-
-**Dehazing Equation** 
-
-Once $\hat{t}(\boldsymbol{x})$ is calculated as the minimum of
-$$\sum_{\boldsymbol{x}} \frac{\left[\hat{t}(\boldsymbol{x})-\tilde{t}_{L B}(\boldsymbol{x})\right]^2}{\sigma^2(\boldsymbol{x})}+\lambda \sum_{\boldsymbol{x}} \sum_{\boldsymbol{y} \in N_{\boldsymbol{x}}} \frac{[\hat{t}(\boldsymbol{x})-\hat{t}(\boldsymbol{y})]^2}{\|\boldsymbol{I}(\boldsymbol{x})-\boldsymbol{I}(\boldsymbol{y})\|^2}$$
-
-the dehazed image is calculated using:
-$$
-\hat{\boldsymbol{J}}(\boldsymbol{x}) = \left\{\boldsymbol{I}(\boldsymbol{x}) - [1 - \hat{t}(\boldsymbol{x})] \boldsymbol{A}\right\} / \hat{t}(\boldsymbol{x}) .
-$$
+![alt text](/images/eq2.png)
 
 In the model, each haze-line in RGB space is defined by its relationship to the air-light value $A$ (these lines originate from the Air-light point and extend through the color space).
 
@@ -64,19 +43,7 @@ Air-light is estimated applying the method described in [3] which I outline belo
 
 # Air-light Estimation
 
-- **Input**: Hazy image $\boldsymbol{I}(\boldsymbol{x})$  
-- **Output**:  $\hat{A}$
-1. Cluster the pixels' colors and generate an indexed image $\hat{\boldsymbol{I}}(\boldsymbol{x})$ whose values are $n \in\{1, \ldots, N\}$, a colormap $\left\{\boldsymbol{I}_n\right\}_{n=1}^N$, and cluster sizes $\left\{w_n\right\}_{n=1}^N$
-2. **for** each pair of color channels $\left(c_1, c_2\right) \quad \in$ $\{R G, G B, R B\}$ **do**
-    - Initialize accum $c_{c_1, c_2}$ to zero
-    - **for** $\boldsymbol{A}=(m \cdot \Delta A, l \cdot \Delta A), m, l \in\{0, \ldots, M\}$ **do**
-        - **for** $\theta_k=\frac{\pi}{K}, k \in\{1, \ldots, K\}$ **do**
-            - **for** $n \in\{1, \ldots, N\}$ **do**
-                - $d=\left|\left(\boldsymbol{A}-\boldsymbol{I}_n\left(c_1, c_2\right)\right) \times\left(\cos \left(\theta_k\right), \sin \left(\theta_k\right)\right)\right|$
-                **if** $(d<\tau) \wedge\left(m \cdot \Delta A>I_n\left(c_1\right)\right) \wedge$ $\left(l \cdot \Delta A>I_n\left(c_2\right)\right)$ **then**
-                    - $\operatorname{accum}_{c_1, c_2}(k, m, l)+=w_n \cdot f\left(\left\|\boldsymbol{A}-\boldsymbol{I}_n\right\|\right)$
-3. $\hat{\boldsymbol{A}}=\arg \max \left\{\operatorname{accum}_{R, G} \otimes \operatorname{accum}_{G, B} \otimes \operatorname{accum}_{R, B}\right\}$, where $\otimes$ is an outer product
-4. Return
+![alt text](/images/eq3.png)
 
 ![alt text](/images/image-2.png)
 
