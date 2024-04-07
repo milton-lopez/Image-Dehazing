@@ -15,16 +15,14 @@ Dehazing matters not only for outdoor photography but also for stuff like remote
 Taken from [4].
 
 Most non-ML dehazing methods are based on the atmospheric scattering hazy image formation model [2]:
-$$
-I(x)=t(x) \cdot J(x)+[1-t(x)] \cdot A
-$$
+
+$$I(x)=t(x) \cdot J(x)+[1-t(x)] \cdot A$$
 
 where $I(x)$ is the observed intensity of the hazy image at pixel $x$, $J(x)$ represents the true radiance of the scene (the true colors of the object) in the absence of haze, and $A$ is the global atmospheric light (air-light) representing the intensity of the ambient light caused by scattered particles (this is tricky to estimate for dehazing).
 
 $t(x)$ is the transmission map. It describes the portion of the light that isn't scattered and reaches the camera. It is dependent on the distance of the object from the camera:
-$$
-t(x)=e^{-\beta d(x)},
-$$
+
+$$t(x)=e^{-\beta d(x)}$$
 
 where $\beta$ is the attenuation coefficient of the atmosphere and $d(x)$ is the distance of the scene at pixel $x$. Since $\beta$ is wavelength-dependent $t$ is different per color channel.
 
