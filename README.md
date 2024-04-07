@@ -33,8 +33,10 @@ where $\beta$ is the attenuation coefficient of the atmosphere and $d(x)$ is the
 
 ![alt text](/images/eq2.png)
 
-In the model, each haze-line in RGB space is defined by its relationship to the air-light value $A$ (these lines originate from the Air-light point and extend through the color space).
+The model is based on the concept of haze-lines in RGB space, which are formed by haze affecting different pixels at different distances from the camera.   
+The idea is that colors in a haze-free image can be approximated by a few distinct clusters in RGB space which when distorted by haze, form these haze-lines. The algorithm estimates the transmission map and air-light for each pixel using the haze-lines to recover the clear image.
 
+Each haze-line in RGB space is defined by its relationship to the air-light value $A$ (these lines originate from the Air-light point and extend through the color space). 
 Estimating the Air-light is crucial because it determines the base point from which haze-lines are drawn. Better Air-light estimation means more accurate reconstruction of the transmission map and a more true-to-life dehazed image.
 
 Air-light is estimated applying the method described in [3] which I outline below.
