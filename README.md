@@ -1,8 +1,6 @@
 # Image Dehazing
 
-This repo contains a python implementation of image dehazing as described in **Non-Local Image Dehazing**, by Berman et al. (CVPR 2016) [1].
-
-Official MATLAB implementation is here: https://github.com/danaberman/non-local-dehazing
+This repo contains a python implementation of image dehazing as described in **Non-Local Image Dehazing**, by Berman et al. CVPR 2016 [1].
 
 # Table of Contents
 
@@ -60,17 +58,22 @@ The algorithm clusters pixel's colors in the hazy image and then uses a Hough Tr
 
 The estimated air-light serves as input to the dehazing algorithm image formation model. It separates the light scattered by atmospheric particles from the actual light reflected by objects, and corrects the color and intensity of each pixel based on its estimated distance from the camera and the amount of scattered light.
 
+Official MATLAB implementation is here: https://github.com/danaberman/non-local-dehazing
 
 # Testing - Results
 
 ![alt text](/images/image-9.png)
 ![alt text](/images/image-10.png)
 ![alt text](/images/image-11.png)
+![alt text](/images/image-20.png)
+![alt text](/images/image-21.png)
+![alt text](/images/image-23.png)
 ![alt text](/images/image-14.png)
 ![alt text](/images/image-12.png)
 ![alt text](/images/image-13.png)
+![alt text](/images/image-22.png)
 ![alt text](/images/image-15.png)
-![alt text](/images/image-1.png)
+![alt text](/images/image-24.png)
 
 
 # TODO
